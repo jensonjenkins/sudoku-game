@@ -1,5 +1,3 @@
-
-
 import java.awt.*;
 import javax.swing.*;
 import java.awt.event.*;
@@ -13,25 +11,19 @@ public class SudokuMain extends JFrame {
    // private variables
    GameBoardPanel board = new GameBoardPanel();
    JButton btnNewGame = new JButton("New Game");
+   MenuBar menuBar = new MenuBar();
 
    // Constructor
    public SudokuMain() {
+      JPanel panelDisplay = new JPanel(new FlowLayout());
       Container cp = getContentPane();
       cp.setLayout(new BorderLayout());
-
+      cp.add(panelDisplay, BorderLayout.SOUTH);
       cp.add(board, BorderLayout.CENTER);
-
-      // /*
-      //  * //Menu
-      //  * JFrame f = new JFrame("Menu");
-      //  * f.setJMenuBar(menubar);
-      //  * f.setLayout(null);
-      //  * f.setVisible(true);
-      //  */
-
+      cp.add(menuBar.getMenuBar(), BorderLayout.NORTH);
       // Add a button to the south to re-start the game via board.newGame()
       // ......
-      cp.add(btnNewGame, BorderLayout.SOUTH);
+      panelDisplay.add(btnNewGame);
       btnNewGame.addActionListener(new ActionListener() {
          @Override
          public void actionPerformed(ActionEvent e) {
@@ -46,6 +38,7 @@ public class SudokuMain extends JFrame {
       setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // to handle window-closing
       setTitle("Sudoku");
       setVisible(true);
+
    }
 
    /** The entry main() entry method */
@@ -57,4 +50,5 @@ public class SudokuMain extends JFrame {
          }
       });
    }
+
 }
