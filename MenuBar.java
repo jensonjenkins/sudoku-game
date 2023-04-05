@@ -1,4 +1,3 @@
-package sudoku;
 
 import java.awt.event.*;
 import java.io.IOException;
@@ -8,6 +7,7 @@ import com.sun.tools.javac.Main;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.awt.Desktop;
+import java.util.Random;
 
 public class MenuBar extends JPanel {
 	private Desktop desktop = Desktop.getDesktop();
@@ -24,7 +24,8 @@ public class MenuBar extends JPanel {
 		JMenuItem easy = new JMenuItem("Easy");
 		JMenuItem intermediate = new JMenuItem("Intermediate");
 		JMenuItem difficult = new JMenuItem("Difficult");
-
+		Random random = new Random();
+    	
 		file.add(newGame);
 		file.add(resetGame);
 		file.add(exit);
@@ -46,98 +47,35 @@ public class MenuBar extends JPanel {
 					Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
 				}
 			}
-
 			@Override
-			public void mousePressed(MouseEvent e) {
-			}
-
+			public void mousePressed(MouseEvent e) {}	
 			@Override
-			public void mouseReleased(MouseEvent e) {
-			}
-
+			public void mouseReleased(MouseEvent e) {}
 			@Override
-			public void mouseEntered(MouseEvent e) {
-			}
-
+			public void mouseEntered(MouseEvent e) {}
 			@Override
-			public void mouseExited(MouseEvent e) {
-			}
+			public void mouseExited(MouseEvent e) {}
 		});
 		
 		//File
 		//New Game
-		newGame.addMouseListener(new MouseListener() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-			}
-
-			@Override
-			public void mousePressed(MouseEvent e) {
-			}
-
-			@Override
-			public void mouseReleased(MouseEvent e) {
-				board.newGame();
-			}
-
-			@Override
-			public void mouseEntered(MouseEvent e) {
-			}
-
-			@Override
-			public void mouseExited(MouseEvent e) {
-			}
-		});
+		newGame.addActionListener(e->{
+			int ranGenNumber = random.nextInt(30);
+			board.newGame(ranGenNumber);});
 		//Exit game
-		exit.addMouseListener(new MouseListener() {
-			@Override
-			public void mouseClicked(MouseEvent evt) {
-			}
-
-			@Override
-			public void mousePressed(MouseEvent e) {
-			}
-
-			@Override
-			public void mouseReleased(MouseEvent e) {
-				System.exit(0);
-			}
-
-			@Override
-			public void mouseEntered(MouseEvent e) {
-			}
-
-			@Override
-			public void mouseExited(MouseEvent e) {
-			}
-		});
+		exit.addActionListener(e->System.exit(0));
 		//Reset game
-		resetGame.addMouseListener(new MouseListener() {
-			@Override
-			public void mouseClicked(MouseEvent evt) {
-				
-			}
+		resetGame.addActionListener(e->board.resetGame());
 
-			@Override
-			public void mousePressed(MouseEvent e) {
-				
-			}
-
-			@Override
-			public void mouseReleased(MouseEvent e) {
-				board.resetGame();
-			}
-
-			@Override
-			public void mouseEntered(MouseEvent e) {
-				
-			}
-
-			@Override
-			public void mouseExited(MouseEvent e) {
-				
-			}
-		});
+		easy.addActionListener(e->{
+			int easyLevel = random.nextInt(1, 11);
+			board.newGame(easyLevel);});
+		intermediate.addActionListener(e->{
+			int intermediateLevel = random.nextInt(11, 36);
+			board.newGame(intermediateLevel);});
+		difficult.addActionListener(e->{
+			int hardLevel = random.nextInt(36, 65);
+			board.newGame(hardLevel);});
 
 	}
 
@@ -148,3 +86,25 @@ public class MenuBar extends JPanel {
 	}
 
 }
+
+// new MouseListener() {
+// 	@Override
+// 	public void mouseClicked(MouseEvent e) {
+// 	}
+
+// 	@Override
+// 	public void mousePressed(MouseEvent e) {
+// 	}
+
+// 	@Override
+// 	public void mouseReleased(MouseEvent e) {
+// 		board.newGame();
+// 	}
+
+// 	@Override
+// 	public void mouseEntered(MouseEvent e) {
+// 	}
+
+// 	@Override
+// 	public void mouseExited(MouseEvent e) {
+// 	}

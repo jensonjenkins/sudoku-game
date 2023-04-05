@@ -1,8 +1,9 @@
-package sudoku;
+
 
 import java.awt.*;
 import javax.swing.*;
 import java.awt.event.*;
+import java.util.Random;
 
 /**
  * The main Sudoku program
@@ -14,7 +15,8 @@ public class SudokuMain extends JFrame {
 	GameBoardPanel board = new GameBoardPanel();
 	private JButton btnNewGame = new JButton("New Game");
 	private MenuBar menuBar = new MenuBar(board);
-
+	Random random = new Random();
+    int ranGenNumber = random.nextInt(30);
 	// Constructor
 	public SudokuMain() {
 		JPanel panelDisplay = new JPanel(new FlowLayout());
@@ -30,12 +32,12 @@ public class SudokuMain extends JFrame {
 		btnNewGame.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				board.newGame();
+				board.newGame(ranGenNumber);
 			}
 		});
 
 		// Initialize the game board to start the game
-		board.newGame();
+		board.newGame(ranGenNumber);
 
 		pack(); // Pack the UI components, instead of using setSize()
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // to handle window-closing

@@ -1,4 +1,4 @@
-package sudoku;
+
 
 import java.awt.*;
 import java.awt.event.*;
@@ -50,9 +50,9 @@ public class GameBoardPanel extends JPanel {
 	 * Generate a new puzzle; and reset the gameboard of cells based on the puzzle.
 	 * You can call this method to start a new game.
 	 */
-	public void newGame() {
+	public void newGame(int cellsToGuess) {
 		// Generate a new puzzle
-		puzzle.newPuzzle(10);
+		puzzle.newPuzzle(cellsToGuess);
 		// Initialize all the 9x9 cells, based on the puzzle.
 		for (int row = 0; row < GRID_SIZE; ++row) {
 			for (int col = 0; col < GRID_SIZE; ++col) {
