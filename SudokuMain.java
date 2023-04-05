@@ -1,3 +1,4 @@
+package sudoku;
 import java.awt.*;
 import javax.swing.*;
 import java.awt.event.*;
@@ -14,6 +15,7 @@ public class SudokuMain extends JFrame {
 	private MenuBar menuBar = new MenuBar(board);
 	public static ProgressBar progressBar = new ProgressBar();
 	public static PointTimer pointTimer = new PointTimer();
+	WelcomeScreen welcome = new WelcomeScreen();
 	Random random = new Random();
     
 	
@@ -35,8 +37,9 @@ public class SudokuMain extends JFrame {
 		pack(); // Pack the UI components, instead of using setSize()
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // to handle window-closing
 		setTitle("Sudoku");
-		setVisible(true);
-
+		setSize(800,600);
+		welcome.displayWelcomeScreen();
+		
 	}
 	
 
