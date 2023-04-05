@@ -1,3 +1,5 @@
+package sudoku;
+
 import java.util.Random;
 
 /**
@@ -75,6 +77,13 @@ public class Puzzle {
       }
       
    }
+   public int[][] getPuzzleNumbers() {
+	   return this.numbers;
+   }
+   public boolean[][] getPuzzleBoolean() {
+	   return this.isGiven;
+   }
+   
    public static void swapRow(int[][] ModelAnswer){
       Random random = new Random();
       int box = random.nextInt(3)*3;
