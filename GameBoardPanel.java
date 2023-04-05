@@ -22,11 +22,11 @@ public class GameBoardPanel extends JPanel {
 	private Puzzle puzzle = new Puzzle();
 	private int[][] copyNumbers = new int[GRID_SIZE][GRID_SIZE];
 	private boolean[][] copyBoolean = new boolean[GRID_SIZE][GRID_SIZE];
+	
 
 	/** Constructor */
 	public GameBoardPanel() {
 		super.setLayout(new GridLayout(GRID_SIZE, GRID_SIZE)); // JPanel
-
 		// Allocate the 2D array of Cell, and added into JPanel.
 		for (int row = 0; row < GRID_SIZE; ++row) {
 			for (int col = 0; col < GRID_SIZE; ++col) {
@@ -43,7 +43,9 @@ public class GameBoardPanel extends JPanel {
 				}
 			}
 		}
+		
 		super.setPreferredSize(new Dimension(BOARD_WIDTH, BOARD_HEIGHT));
+	
 	}
 
 	/**
@@ -90,6 +92,10 @@ public class GameBoardPanel extends JPanel {
 	private class CellInputListener implements ActionListener {
 
 		public void actionPerformed(ActionEvent e) {
+			if(!PointTimer.stateOfTimer){
+				SudokuMain.pointTimer.start();
+			}
+
 			Cell sourceCell = (Cell) e.getSource();
 			int numberIn = Integer.parseInt(sourceCell.getText());
 			int currentCellRow = sourceCell.row, currentCellCol = sourceCell.col;
@@ -162,11 +168,32 @@ public class GameBoardPanel extends JPanel {
 			if (noConflicts) {
 				sourceCell.status = CellStatus.CORRECT_GUESS;
 			}
-
 			sourceCell.paint();
 
+			//updates the progress bar
+
+			int totalToGuess = 0, totalCorrectGuess=0;
+
+			for (int row = 0; row < GRID_SIZE; ++row) {
+				for (int col = 0; col < GRID_SIZE; ++col) {
+					if(cells[row][col].isEditable()){
+						totalToGuess++;
+						if(cells[row][col].status == CellStatus.CORRECT_GUESS){
+							totalCorrectGuess++;
+						}
+					};
+			
+				}
+			}
+			SudokuMain.progressBar.setNewValue((double)totalCorrectGuess * 100.0/(double)totalToGuess);
+
+
+
+			//if the puzzle is solved
 			if (isSolved()) {
-				JOptionPane.showMessageDialog(null, "Congratulations!");
+				SudokuMain.pointTimer.stop();
+				PointTimer.stateOfTimer = false;
+				JOptionPane.showMessageDialog(null, "Congratulations! Your time was "+SudokuMain.pointTimer.getText());
 			}
 		}
 	}

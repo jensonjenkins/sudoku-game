@@ -61,21 +61,37 @@ public class MenuBar extends JPanel {
 		//New Game
 		newGame.addActionListener(e->{
 			int ranGenNumber = random.nextInt(30);
-			board.newGame(ranGenNumber);});
+			board.newGame(ranGenNumber);
+			PointTimer.stateOfTimer = false;
+			SudokuMain.pointTimer.reset();
+		});
 		//Exit game
 		exit.addActionListener(e->System.exit(0));
 		//Reset game
-		resetGame.addActionListener(e->board.resetGame());
+		resetGame.addActionListener(e->{
+			board.resetGame();
+			PointTimer.stateOfTimer = false;
+			SudokuMain.pointTimer.reset();
+		});
 
 		easy.addActionListener(e->{
 			int easyLevel = random.nextInt(1, 11);
-			board.newGame(easyLevel);});
+			board.newGame(easyLevel);
+			PointTimer.stateOfTimer = false;
+			SudokuMain.pointTimer.reset();
+		});
 		intermediate.addActionListener(e->{
 			int intermediateLevel = random.nextInt(11, 36);
-			board.newGame(intermediateLevel);});
+			board.newGame(intermediateLevel);
+			PointTimer.stateOfTimer = false;
+			SudokuMain.pointTimer.reset();
+		});
 		difficult.addActionListener(e->{
 			int hardLevel = random.nextInt(36, 65);
-			board.newGame(hardLevel);});
+			board.newGame(hardLevel);
+			PointTimer.stateOfTimer = false;
+			SudokuMain.pointTimer.reset();
+		});
 
 	}
 
@@ -87,24 +103,3 @@ public class MenuBar extends JPanel {
 
 }
 
-// new MouseListener() {
-// 	@Override
-// 	public void mouseClicked(MouseEvent e) {
-// 	}
-
-// 	@Override
-// 	public void mousePressed(MouseEvent e) {
-// 	}
-
-// 	@Override
-// 	public void mouseReleased(MouseEvent e) {
-// 		board.newGame();
-// 	}
-
-// 	@Override
-// 	public void mouseEntered(MouseEvent e) {
-// 	}
-
-// 	@Override
-// 	public void mouseExited(MouseEvent e) {
-// 	}
