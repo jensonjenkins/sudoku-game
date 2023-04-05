@@ -1,4 +1,4 @@
-package sudoku;
+
 import java.awt.*;
 import javax.swing.*;
 import java.awt.event.*;
@@ -15,11 +15,13 @@ public class SudokuMain extends JFrame {
 	private MenuBar menuBar = new MenuBar(board);
 	public static ProgressBar progressBar = new ProgressBar();
 	public static PointTimer pointTimer = new PointTimer();
-	WelcomeScreen welcome = new WelcomeScreen();
+	
 	Random random = new Random();
     
 	
 	public SudokuMain() {
+		
+		
 		JPanel panelDisplay = new JPanel(new FlowLayout());
 		Container cp = getContentPane();
 		cp.setLayout(new BorderLayout());
@@ -37,8 +39,9 @@ public class SudokuMain extends JFrame {
 		pack(); // Pack the UI components, instead of using setSize()
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // to handle window-closing
 		setTitle("Sudoku");
-		setSize(800,600);
-		welcome.displayWelcomeScreen();
+		setSize(600,600);
+		setVisible(true);
+		
 		
 	}
 	
@@ -48,7 +51,12 @@ public class SudokuMain extends JFrame {
 		SwingUtilities.invokeLater(new Runnable() {
 			@Override
 			public void run() {
-				new SudokuMain();
+				WelcomeScreen welcome = new WelcomeScreen();
+				welcome.displayWelcomeScreen();
+				// if(!WelcomeScreen.WelcomeScreenState){
+				// 	new SudokuMain();
+				// }
+				
 			}
 		});
 	}
