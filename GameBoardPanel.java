@@ -58,7 +58,7 @@ public class GameBoardPanel extends JPanel {
 		// Initialize all the 9x9 cells, based on the puzzle.
 		for (int row = 0; row < GRID_SIZE; ++row) {
 			for (int col = 0; col < GRID_SIZE; ++col) {
-				cells[row][col].newGame(puzzle.numbers[row][col], puzzle.isGiven[row][col]);
+				cells[row][col].newGame(puzzle.numbers[row][col], puzzle.isGiven[row][col], row, col);
 			}
 		}
 		copyNumbers = puzzle.getPuzzleNumbers();
@@ -69,7 +69,7 @@ public class GameBoardPanel extends JPanel {
 	public void resetGame() {
 		for (int row = 0; row < GRID_SIZE; ++row) {
 			for (int col = 0; col < GRID_SIZE; ++col) {
-				cells[row][col].newGame(copyNumbers[row][col], copyBoolean[row][col]);
+				cells[row][col].newGame(copyNumbers[row][col], copyBoolean[row][col], row, col);
 			}
 		}
 	}
@@ -92,9 +92,6 @@ public class GameBoardPanel extends JPanel {
 	private class CellInputListener implements ActionListener {
 
 		public void actionPerformed(ActionEvent e) {
-			if(!PointTimer.stateOfTimer){
-				SudokuMain.pointTimer.start();
-			}
 
 			Cell sourceCell = (Cell) e.getSource();
 			int numberIn = Integer.parseInt(sourceCell.getText());
@@ -141,7 +138,14 @@ public class GameBoardPanel extends JPanel {
 						public void actionPerformed(ActionEvent evt) {
 							if (!cells[finalRow][finalCol].isEditable()) {
 								cells[finalRow][finalCol].status = CellStatus.GIVEN;
-								cells[finalRow][finalCol].paint();
+								if((finalRow>=3&&finalRow<=5||finalCol>=3&&finalCol<=5)){
+									cells[finalRow][finalCol].setBackground(Cell.BG_GIVEN_LIGHT);
+								 }else{
+									cells[finalRow][finalCol].setBackground(Cell.BG_GIVEN_DARK);
+								 }
+								 if((finalRow >= 3 && finalRow <= 5) && (finalCol >= 3 && finalCol <= 5)){
+									cells[finalRow][finalCol].setBackground(Cell.BG_GIVEN_DARK);
+								 }
 							}
 						}
 					});
@@ -193,7 +197,11 @@ public class GameBoardPanel extends JPanel {
 			if (isSolved()) {
 				SudokuMain.pointTimer.stop();
 				PointTimer.stateOfTimer = false;
-				JOptionPane.showMessageDialog(null, "Congratulations! Your time was "+SudokuMain.pointTimer.getText());
+				if(SudokuMain.username.getText().equals("Enter Username (e.g. Player1)")){
+					JOptionPane.showMessageDialog(null, "Congratulations! Your time was "+SudokuMain.pointTimer.getText());
+				}else{
+					JOptionPane.showMessageDialog(null, "Congratulations! "+SudokuMain.username.getText()+"'s time was "+SudokuMain.pointTimer.getText());
+				}
 			}
 		}
 	}

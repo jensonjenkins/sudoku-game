@@ -62,8 +62,7 @@ public class MenuBar extends JPanel {
 		newGame.addActionListener(e->{
 			int ranGenNumber = random.nextInt(30);
 			board.newGame(ranGenNumber);
-			PointTimer.stateOfTimer = false;
-			SudokuMain.pointTimer.reset();
+			resetGameFunction();
 		});
 		//Exit game
 		exit.addActionListener(e->System.exit(0));
@@ -71,26 +70,23 @@ public class MenuBar extends JPanel {
 		resetGame.addActionListener(e->{
 			board.resetGame();
 			PointTimer.stateOfTimer = false;
-			SudokuMain.pointTimer.reset();
+			resetGameFunction();
 		});
 
 		easy.addActionListener(e->{
 			int easyLevel = random.nextInt(1, 11);
 			board.newGame(easyLevel);
-			PointTimer.stateOfTimer = false;
-			SudokuMain.pointTimer.reset();
+			resetGameFunction();
 		});
 		intermediate.addActionListener(e->{
 			int intermediateLevel = random.nextInt(11, 36);
 			board.newGame(intermediateLevel);
-			PointTimer.stateOfTimer = false;
-			SudokuMain.pointTimer.reset();
+			resetGameFunction();
 		});
 		difficult.addActionListener(e->{
 			int hardLevel = random.nextInt(36, 65);
 			board.newGame(hardLevel);
-			PointTimer.stateOfTimer = false;
-			SudokuMain.pointTimer.reset();
+			resetGameFunction();
 		});
 
 	}
@@ -99,6 +95,13 @@ public class MenuBar extends JPanel {
 		JRootPane rootPane = new JRootPane();
 		rootPane.setJMenuBar(menuBar);
 		return rootPane;
+	}
+
+	public void resetGameFunction(){
+		PointTimer.stateOfTimer = false;
+		SudokuMain.pointTimer.reset();
+		SudokuMain.pointTimer.start();
+		SudokuMain.progressBar.setNewValue(0);
 	}
 
 }

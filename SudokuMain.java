@@ -1,8 +1,8 @@
-
 import java.awt.*;
 import javax.swing.*;
 import java.awt.event.*;
 import java.util.Random;
+import java.io.File;
 
 /**
  * The main Sudoku program
@@ -15,9 +15,10 @@ public class SudokuMain extends JFrame {
 	private MenuBar menuBar = new MenuBar(board);
 	public static ProgressBar progressBar = new ProgressBar();
 	public static PointTimer pointTimer = new PointTimer();
+	public static JTextField username = new JTextField("Enter Username (e.g. Player1)");
+	public static boolean WelcomeScreenState = true;
 	Random random = new Random();
 	Timer timer;
-	public static boolean WelcomeScreenState = true;
 
 	public SudokuMain() {
 
@@ -27,92 +28,89 @@ public class SudokuMain extends JFrame {
 		w.setSize(600, 600);
 		w.setVisible(true);
 
-		JPanel panel = new JPanel();
-		w.add(panel, BorderLayout.CENTER);
-		panel.setBorder(BorderFactory.createLineBorder(Color.black));
-		// Title Panel
+		JPanel imgPanel = new JPanel();
+		imgPanel.setBackground(Color.BLACK);
+		w.add(imgPanel, BorderLayout.CENTER);
+		ImageIcon icon = new ImageIcon("BackgroundImageSudoku.jpg");
+		Image img = icon.getImage();
+		JLabel image = new JLabel("");
+		imgPanel.add(image);
+		Image modifiedimage = img.getScaledInstance(600, 600, java.awt.Image.SCALE_SMOOTH);
+		icon = new ImageIcon(modifiedimage);
+		image.setIcon(icon);
 
-		JPanel titlePanel = new JPanel();
-		JPanel titleMarginPanel = new JPanel();
-		titleMarginPanel.setBorder(BorderFactory.createEmptyBorder(100, 20, 20, 20));
-		titlePanel.add(titleMarginPanel);
-		titleMarginPanel.setBackground(Color.black);
-
-		titlePanel.setBounds(0, 100, 600, 150);
-		titlePanel.setBackground(Color.black);
-		w.add(titlePanel);
-
-		// Title Label
-		JLabel titleLabel = new JLabel("SUDOKU");
-		titleLabel.setForeground(Color.white);
-		titleLabel.setBackground(Color.black);
-		titleLabel.setFont(new Font("Times New Roman", Font.PLAIN, 90));
-		titleMarginPanel.add(titleLabel);
-
-		// Start Button Panel
-		JPanel buttonPanel = new JPanel(new FlowLayout());
+		JPanel buttonPanel = new JPanel(new GridLayout(3, 1));
+		buttonPanel.setBorder(BorderFactory.createEmptyBorder(0, 150, 10, 150));
 		w.add(buttonPanel, BorderLayout.SOUTH);
-		buttonPanel.setBackground(Color.black);
-		JPanel ButtonMarginPanel = new JPanel();
-		ButtonMarginPanel.setBorder(BorderFactory.createEmptyBorder(20, 20, 100, 20));
-		buttonPanel.add(ButtonMarginPanel);
-		ButtonMarginPanel.setBackground(Color.black);
+		buttonPanel.setBackground(new Color(255, 172, 92));
 
 		// Username TextField
-		JTextField username = new JTextField("Username");
 		username.setEditable(true);
-		buttonPanel.add(username);
 		username.setBackground(Color.WHITE);
+		username.setForeground(Color.gray);
+		username.addFocusListener(new FocusListener() {
+            @Override
+            public void focusGained(FocusEvent e) {
+                if (username.getText().equals("Enter Username (e.g. Player1)")) {
+                    username.setText("");
+                    username.setForeground(Color.BLACK);
+                }
+            }
+            @Override
+            public void focusLost(FocusEvent e) {
+                if (username.getText().isEmpty()) {
+                    username.setForeground(Color.GRAY);
+                    username.setText("Enter Username (e.g. Player1)");
+                }
+            }
+        });
+
 		// Start Button
-		JButton btnStart = new JButton("Start");
-		btnStart.setPreferredSize(new Dimension(200, 70));
-		btnStart.setBackground(Color.black);
-		btnStart.setForeground(Color.white);
-		btnStart.setFont(new Font("Times New Roman", Font.PLAIN, 28));
+		JButton btnStart = new JButton("START GAME");
+		btnStart.setPreferredSize(new Dimension(200, 40));
+		btnStart.setForeground(Color.BLACK);
+		btnStart.setFont(new Font("Helvetica", Font.BOLD, 26));
 		btnStart.setFocusPainted(false);
-		buttonPanel.add(btnStart);
+
 
 		// Difficulty Combo Box
 		String[] diff = { "Easy", "Intermediate", "Difficult" };
 		JComboBox<String> difficulty = new JComboBox<String>(diff);
-		final String[] selectedDifficulty = {""};
+		final String[] selectedDifficulty = { "" };
 		difficulty.addActionListener(e -> {
 			selectedDifficulty[0] = (String) difficulty.getSelectedItem();
 			System.out.println("Selected difficulty: " + selectedDifficulty[0]);
 		});
-		buttonPanel.add(difficulty);
-		
-	
-		btnStart.addActionListener(e -> {
-			JProgressBar progress = new JProgressBar(0, 100);
-			w.add(BorderLayout.PAGE_END, progress);
 
-			w.revalidate();
-			timer = new Timer(100, new ActionListener() {
-				@Override
-				public void actionPerformed(ActionEvent e) {
-					int x = progress.getValue();
-					if (x == 100) {
-						w.dispose();
-						timer.stop();
-						if(selectedDifficulty[0].equals("Difficult")){
-							int difficultNum = random.nextInt(36, 65);
-							board.newGame(difficultNum);
-						}else if(selectedDifficulty[0].equals("Intermediate")){
-							int intermediateNum = random.nextInt(11, 36);
-							board.newGame(intermediateNum);
-						}else{
-							int easyNum = random.nextInt(1, 11);
-							board.newGame(easyNum);
-						}
-						
-					} else {
-						progress.setValue(x + 8);
-					}
-				}
-			});
-			timer.start();
-			;
+		buttonPanel.add(username);
+		buttonPanel.add(difficulty);
+		buttonPanel.add(btnStart);
+
+
+		btnStart.addActionListener(e -> {
+			w.dispose();
+			pointTimer.start();
+			if (selectedDifficulty[0].equals("Difficult")) {
+				int difficultNum = random.nextInt(36, 65);
+				board.newGame(difficultNum);
+			} else if (selectedDifficulty[0].equals("Intermediate")) {
+				int intermediateNum = random.nextInt(11, 36);
+				board.newGame(intermediateNum);
+			} else {
+				int easyNum = random.nextInt(1, 11);
+				board.newGame(easyNum);
+			}
+		
+		});
+		btnStart.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				btnStart.setForeground(new Color(169, 121, 255));
+			}
+			@Override
+			public void mouseExited(MouseEvent e) {
+				btnStart.setForeground((Color.BLACK));
+			}
 		});
 		// Creating Container for Sudoku
 		JPanel panelDisplay = new JPanel(new FlowLayout());
