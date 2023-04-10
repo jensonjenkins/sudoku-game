@@ -1,5 +1,4 @@
 
-
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
@@ -45,9 +44,9 @@ public class GameBoardPanel extends JPanel {
 		}
 		
 		super.setPreferredSize(new Dimension(BOARD_WIDTH, BOARD_HEIGHT));
-	
-	}
 
+	}
+	
 	/**
 	 * Generate a new puzzle; and reset the gameboard of cells based on the puzzle.
 	 * You can call this method to start a new game.

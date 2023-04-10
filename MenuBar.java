@@ -98,6 +98,8 @@ public class MenuBar extends JPanel {
 	}
 
 	public void resetGameFunction(){
+		PointTimer.GameBoardComponent.setVisible(true);
+		PointTimer.pause.setText("Pause");
 		PointTimer.stateOfTimer = false;
 		SudokuMain.pointTimer.reset();
 		SudokuMain.pointTimer.start();

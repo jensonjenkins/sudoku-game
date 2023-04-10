@@ -1,7 +1,7 @@
-
-
 import javax.swing.*;
 import java.awt.event.*;
+import java.awt.Component;
+
 
 public class PointTimer extends JPanel {
     private int second, minute, hour;
@@ -9,10 +9,32 @@ public class PointTimer extends JPanel {
     private ActionListener listener;
     public static boolean stateOfTimer = false;
     private JTextField TimerField;
-
+    public static JButton pause;
+    public static Component SudokuPauseScreen;
+    public static Component GameBoardComponent;
+	
     public PointTimer() {
-        TimerField = new JTextField(8);
+        TimerField = new JTextField(6);
         super.add(TimerField);
+ 
+        pause = new JButton("Pause");
+        pause.addActionListener(e-> {
+        	
+            GameBoardComponent = SudokuMain.board;
+            SudokuPauseScreen = SudokuMain.pauseScreen;
+            // SudokuPauseScreen.setVisible(!SudokuPauseScreen.isVisible());
+            GameBoardComponent.setVisible(!GameBoardComponent.isVisible());
+        	if(pause.getText().equals("Pause")){
+                timer.stop();
+                pause.setText("Resume");
+                SudokuMain.cardLayout.show(SudokuMain.cardPanel, "pauseScreen");
+            }else{
+                timer.start();
+                pause.setText("Pause");
+                SudokuMain.cardLayout.show(SudokuMain.cardPanel, "screen");
+            }
+        });
+        super.add(pause);
         TimerField.setEditable(false);
         second = 0;minute = 0;hour = 0;
         listener = new ActionListener() {
@@ -50,4 +72,10 @@ public class PointTimer extends JPanel {
     public String getText(){
         return TimerField.getText();
     }
+    
+    
+    
 }
+
+
+

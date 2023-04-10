@@ -11,9 +11,12 @@ public class SudokuMain extends JFrame {
 	private static final long serialVersionUID = 1L; // to prevent serial warning
 
 	// private variables
-	GameBoardPanel board = new GameBoardPanel();
+	public static GameBoardPanel board = new GameBoardPanel();
+	public static PauseScreen pauseScreen = new PauseScreen();
 	private MenuBar menuBar = new MenuBar(board);
 	public static ProgressBar progressBar = new ProgressBar();
+	public static JPanel cardPanel = new JPanel(new CardLayout());
+	public static CardLayout cardLayout = (CardLayout) cardPanel.getLayout();
 	public static PointTimer pointTimer = new PointTimer();
 	public static JTextField username = new JTextField("Enter Username (e.g. Player1)");
 	public static boolean WelcomeScreenState = true;
@@ -114,10 +117,13 @@ public class SudokuMain extends JFrame {
 		});
 		// Creating Container for Sudoku
 		JPanel panelDisplay = new JPanel(new FlowLayout());
+		
 		Container cp = getContentPane();
 		cp.setLayout(new BorderLayout());
 		cp.add(panelDisplay, BorderLayout.SOUTH);
-		cp.add(board, BorderLayout.CENTER);
+		cp.add(cardPanel);
+		cardPanel.add(board, "board");
+		cardPanel.add(pauseScreen, "pauseScreen");
 		cp.add(menuBar.getMenuBar(), BorderLayout.NORTH);
 
 		panelDisplay.add(progressBar);
@@ -125,9 +131,9 @@ public class SudokuMain extends JFrame {
 
 		pack(); // Pack the UI components, instead of using setSize()
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // to handle window-closing
+		cardLayout.show(cardPanel, "board");
 		setTitle("Sudoku");
 		setSize(600, 600);
-
 		setVisible(true);
 	}
 
