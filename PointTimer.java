@@ -40,7 +40,7 @@ public class PointTimer extends JPanel {
         listener = new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 second++;
-                if(second==100){
+                if(second==60){
                     second=0;
                     minute++;
                     if(minute==60){

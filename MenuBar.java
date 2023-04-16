@@ -3,8 +3,6 @@ import java.awt.event.*;
 import java.io.IOException;
 import java.awt.*;
 import javax.swing.*;
-import com.sun.tools.javac.Main;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.awt.Desktop;
 import java.util.Random;
@@ -44,9 +42,10 @@ public class MenuBar extends JPanel {
 					desktop.browse(java.net.URI
 							.create("https://www3.ntu.edu.sg/home/ehchua/programming/java/JavaGame_Sudoku.html"));
 				} catch (IOException ex) {
-					Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+					Logger.getLogger("test");
 				}
 			}
+			// Main.class.getName()).log(Level.SEVERE, null, ex
 			@Override
 			public void mousePressed(MouseEvent e) {}	
 			@Override

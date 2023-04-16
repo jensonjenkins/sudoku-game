@@ -2,11 +2,7 @@ import java.awt.*;
 import javax.swing.*;
 import java.awt.event.*;
 import java.util.Random;
-import java.io.File;
 
-/**
- * The main Sudoku program
- */
 public class SudokuMain extends JFrame {
 	private static final long serialVersionUID = 1L; // to prevent serial warning
 
@@ -76,7 +72,7 @@ public class SudokuMain extends JFrame {
 		btnStart.setFocusPainted(false);
 
 
-		// Difficulty Combo Box
+		// Difficulty Selection
 		String[] diff = { "Easy", "Intermediate", "Difficult" };
 		JComboBox<String> difficulty = new JComboBox<String>(diff);
 		final String[] selectedDifficulty = { "" };
